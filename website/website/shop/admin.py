@@ -2,8 +2,31 @@ from django.contrib import admin
 from . import models
 # Register your models here.
 
-admin.site.register(models.Product)
-admin.site.register(models.Order)
-admin.site.register(models.OrderItem)
-admin.site.register(models.Invoice)
-admin.site.register(models.Transaction)
+# show product date in admin
+
+class ProductAdmin(admin.ModelAdmin):
+  list_display = ('name','create_time')
+
+# show product date in admin end
+
+class OrderAdmin(admin.ModelAdmin):
+  list_display = ('id', 'customer', 'order_date',)
+
+
+class OrderItemAdmin(admin.ModelAdmin):
+  list_display = ('id', 'order', 'product')
+
+
+class TransactionAdmin(admin.ModelAdmin):
+  list_display = ('id', 'invoice', 'amount', 'transaction_date', 'status')
+
+
+class InvoiceAdmin(admin.ModelAdmin):
+  list_display = ('id', 'order',)
+
+
+admin.site.register(models.Product,ProductAdmin)
+admin.site.register(models.Order,OrderAdmin)
+admin.site.register(models.OrderItem,OrderItemAdmin)
+admin.site.register(models.Invoice,InvoiceAdmin)
+admin.site.register(models.Transaction,TransactionAdmin)
