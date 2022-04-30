@@ -9,7 +9,7 @@ def index(request):
 def checkout(request):
   return render(request,'checkout.html')
 
-def product(request):
+def product(request,pk):
   return render(request,'product.html')
 
 def store(request):
