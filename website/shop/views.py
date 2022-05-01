@@ -1,8 +1,12 @@
 from django.shortcuts import get_object_or_404, render
 from . import models
+
+from cart.cart import Cart
+
 # Create your views here.
 
 def index(request):
+  Cart(request)
   product_list = models.Product.objects.all()[:5]
   return render(request,'index.html',{'product_list':product_list})
 
