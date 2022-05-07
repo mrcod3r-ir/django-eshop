@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.conf import settings
 from shop import models
 class Cart:
@@ -27,6 +28,14 @@ class Cart:
   def show_cart(self):
     product_ids = self.cart.keys()
     products = models.Product.objects.filter(id__in = product_ids)
-    return products
+    
+    for product in products:
+      self.cart[str(product.id)]['product'] = product
+      
+    for item in self.cart.values():
+      item['price'] = Decimal(item['price'])
+      item['total_price'] = item['price'] * item['product_count']
+      
+    return self.cart.values()
     
     

@@ -8,7 +8,10 @@
 	</head>
 	<body>
 		{% for item in cart %}
-		<h1>{{item.name}}</h1>
+		<h1>
+			{{item.product.name}} <br />
+			{{item.product.price}} × {{item.product_count}} = {{item.total_price}}
+		</h1>
 		{% endfor %}
 	</body>
 </html>
