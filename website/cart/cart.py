@@ -21,11 +21,19 @@ class Cart:
       self.cart[product_id]['product_count'] += product_count
     self.save()
     
+    
+  def remove(self,product):
+    product_id = str(product.id)
+    if product_id in self.cart:
+      del self.cart[product_id]
+      self.save()
+  
+  
   def save(self):
     self.session[settings.CART_SESSION_ID] = self.cart
     self.session.modified = True
     
-  def show_cart(self):
+  def __iter__(self):
     product_ids = self.cart.keys()
     products = models.Product.objects.filter(id__in = product_ids)
     
@@ -36,6 +44,6 @@ class Cart:
       item['price'] = Decimal(item['price'])
       item['total_price'] = item['price'] * item['product_count']
       
-    return self.cart.values()
+      yield item
     
     

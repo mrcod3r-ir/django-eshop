@@ -12,5 +12,11 @@ def cart_add(request):
 
 def cart_detail(request):
   cart = Cart(request)
-  cart_items = cart.show_cart()
-  return render(request,'cart/detail.html',{'cart':cart_items})
+  return render(request,'cart/detail.html',{'cart':cart})
+
+
+def cart_remove(request,product_id):
+  cart = Cart(request)
+  product = get_object_or_404(models.Product,id=product_id)
+  cart.remove(product)
+  return redirect(reverse('cart:cart_detail'))
