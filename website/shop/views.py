@@ -1,7 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from . import models
-
-from cart.cart import Cart
+from cart.forms import CartAddProductForm
 
 # Create your views here.
 
@@ -14,7 +13,8 @@ def checkout(request):
 
 def product(request,pk):
   product_detail = get_object_or_404(models.Product,id=pk)
-  return render(request,'product.html',{'product_detail':product_detail})
+  cart_add_product_form = CartAddProductForm()
+  return render(request,'product.html',{'product_detail':product_detail,'cart_add_product_form':cart_add_product_form})
 
 def store(request):
   return render(request,'store.html')

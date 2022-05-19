@@ -1,13 +1,17 @@
 from django.shortcuts import redirect, render,reverse,get_object_or_404
 from .cart import Cart
 from shop import models
+from django.views.decorators.http import require_POST
+from . import forms
 
-# Create your views here.
-
-def cart_add(request):
+@require_POST
+def cart_add(request,product_id):
   cart = Cart(request)
-  product = get_object_or_404(models.Product,id=2)
-  cart.add(product)
+  product = get_object_or_404(models.Product,id=product_id)
+  form = forms.CartAddProductForm(request.POST)
+  if form.is_valid():
+    form_data = form.cleaned_data
+    cart.add(product=product,product_count=form_data['product_count'],update_count=form_data['update'])
   return redirect(reverse('cart:cart_detail'))
 
 def cart_detail(request):

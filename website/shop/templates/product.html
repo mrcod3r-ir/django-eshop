@@ -135,7 +135,7 @@
 					</div>
 
 					<div class="add-to-cart">
-						<div class="qty-label">
+						<!-- <div class="qty-label">
 							Qty
 							<div class="input-number">
 								<input type="number" />
@@ -143,7 +143,11 @@
 								<span class="qty-down">-</span>
 							</div>
 						</div>
-						<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+						<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button> -->
+						<form method="post" action="{% url 'cart:cart_add' product_detail.id %}">
+							{{cart_add_product_form}} {% csrf_token %}
+							<button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+						</form>
 					</div>
 
 					<ul class="product-btns">
