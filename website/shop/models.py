@@ -1,9 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.apps.config import AppConfig
 
 
 class Product(models.Model):
+    default_auto_field = 'django.db.models.AutoField'
     name = models.CharField(max_length=100)
     description = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)
@@ -22,6 +24,7 @@ class Product(models.Model):
 
 
 class Order(models.Model):
+    default_auto_field = 'django.db.models.AutoField'
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     order_date = models.DateTimeField(auto_now_add=True)
 
@@ -30,6 +33,7 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+    default_auto_field = 'django.db.models.AutoField'
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
     product_price = models.DecimalField(max_digits=10, decimal_places=0)
@@ -41,6 +45,7 @@ class OrderItem(models.Model):
 
 
 class Invoice(models.Model):
+    default_auto_field = 'django.db.models.AutoField'
     order = models.ForeignKey(Order, null=True, on_delete=models.SET_NULL)
     invoice_date = models.DateTimeField(auto_now_add=True)
     authority = models.CharField(max_length=200, blank=True, null=True)
@@ -50,6 +55,7 @@ class Invoice(models.Model):
 
 
 class Transaction(models.Model):
+    default_auto_field = 'django.db.models.AutoField'
     STATUS_CHOICES = (
         ('pending', 'Pending'),
         ('failed', 'Failed'),
