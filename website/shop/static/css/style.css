@@ -2188,3 +2188,12 @@ textarea.input {
     margin-top: 10px;
   }
 }
+
+
+table img {
+  width: 64px;
+}
+
+table td {
+  padding: 5px 10px;
+}

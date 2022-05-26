@@ -1,17 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Cart Detail</title>
-	</head>
-	<body>
-		{% for item in cart %}
-		<h1>
-			{{item.product.name}} <br />
-			{{item.product.price}} × {{item.product_count}} = {{item.total_price}}
-		</h1>
-		{% endfor %}
-	</body>
-</html>
+{% extends 'base.html' %}
+{% load static %} 
+{% block title %} Shopping Cart {% endblock %} 
+{% block content %}
+		<h1>Your Shopping Cart</h1>
+		<div class="container">
+			<table class="table-bordered">
+				<thead>
+					<tr>
+						<th>Image</th>
+						<th>Product</th>
+						<th>Count</th>
+						<th>Remove</th>
+						<th>Unit Price</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in cart %}
+						{% with product=item.product %}
+							<tr>
+								<td>
+									<a href="{{product.get_absolute_url}}" >
+										<img style="width:64px;" src="{{product.image.url}}" alt="image">
+									</a>
+								</td>
+								<td>{{product.name}}</td>
+								<td>
+									<form method="post" action="{% url 'cart:cart_add' product.id %}">
+										{{item.update_product_count_form.product_count}}
+										{{item.update_product_count_form.update}}
+										{% csrf_token %}
+										<input type="submit" value="update">
+									</form>
+								</td>
+								<td>
+									<a href="{% url 'cart:cart_remove' product.id %}">Remove</a>
+								</td>
+								<td>
+									{{item.price}}
+								</td>
+								<td>
+									{{item.total_price}}
+								</td>
+							</tr>
+						{% endwith %}
+					{% endfor %}
+					<tr>
+						<td><h3>Total Price : {{cart.get_total_price}}</h3></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+
+{% endblock %}

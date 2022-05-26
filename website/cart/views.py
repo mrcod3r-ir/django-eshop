@@ -16,6 +16,8 @@ def cart_add(request,product_id):
 
 def cart_detail(request):
   cart = Cart(request)
+  for item in cart:
+    item['update_product_count_form'] = forms.CartAddProductForm(initial={'product_count':item['product_count'],'update':True})
   return render(request,'cart/detail.html',{'cart':cart})
 
 

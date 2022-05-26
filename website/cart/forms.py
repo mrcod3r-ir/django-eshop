@@ -1,4 +1,3 @@
-from itertools import product
 from django import forms
 
 PRODUCT_COUNT_CHOICES = [(i,str(i)) for i in range(1,6)]
