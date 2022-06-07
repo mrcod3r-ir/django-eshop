@@ -512,6 +512,7 @@ textarea.input {
   width: 90px;
   text-align: center;
   color: #FFF;
+  cursor: pointer;
 }
 
 .header-ctn>div>a>i {
