@@ -1,3 +1,4 @@
+from cgi import print_arguments
 from decimal import Decimal
 from django.conf import settings
 from shop import models
@@ -32,11 +33,10 @@ class Cart:
   def save(self):
     self.session[settings.CART_SESSION_ID] = self.cart
     self.session.modified = True
-    
+
   def __iter__(self):
     product_ids = self.cart.keys()
     products = models.Product.objects.filter(id__in = product_ids)
-    
     for product in products:
       self.cart[str(product.id)]['product'] = product
       
